@@ -257,7 +257,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="WTableView" destination="FfC-eD-axa" id="Eiq-kQ-I95"/>
                         <outlet property="cancelBtn" destination="v1f-0B-RyT" id="Pqc-Mb-FkD"/>
                         <outlet property="city" destination="Fhm-7I-vUI" id="raG-JR-eRD"/>
                         <outlet property="curTemp" destination="G3r-Qd-uA0" id="TZp-1c-vkb"/>
@@ -266,6 +265,7 @@
                         <outlet property="locationTextField" destination="VTP-YH-qL1" id="YR9-WA-Dcz"/>
                         <outlet property="locationView" destination="igI-KC-Ouc" id="VIJ-p0-TSe"/>
                         <outlet property="setLocation" destination="1KB-No-TQf" id="w1n-9E-CBs"/>
+                        <outlet property="tableView" destination="FfC-eD-axa" id="GkF-t4-krk"/>
                         <outlet property="todayDay" destination="cb9-Pl-9b3" id="bq9-N4-OCZ"/>
                         <outlet property="todayHigh" destination="acp-mC-93r" id="Tzn-HU-FbT"/>
                         <outlet property="todayLow" destination="8rl-iA-WAQ" id="YIl-Dc-pOp"/>

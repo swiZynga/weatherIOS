@@ -21,7 +21,7 @@
 @property(weak, nonatomic) IBOutlet UITextField *locationTextField;
 @property(weak, nonatomic) IBOutlet UIButton *cancelBtn;
 @property(weak, nonatomic) IBOutlet UIButton *setLocation;
-@property(weak, nonatomic) IBOutlet UITableView *WTableView;
+@property(weak, nonatomic) IBOutlet UITableView *tableView;
 @property(weak, nonatomic) IBOutlet UIImageView *divider;
 
 

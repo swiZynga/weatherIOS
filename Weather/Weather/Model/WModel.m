@@ -14,6 +14,7 @@
 - (id)copyWithZone:(NSZone *)zone {
     WModel *newWModel = [[[self class] allocWithZone:zone] init];
     newWModel.days = [self.days mutableCopy];
+    newWModel.city = [self.city copy];
     
     return newWModel;
 }

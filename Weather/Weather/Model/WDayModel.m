@@ -10,14 +10,13 @@
 
 @implementation WDayModel
 
-- (id)initWithdayName:(NSString *)dayName weatherDesc:(NSString *)description highTemp:(NSString *)highT lowTemp:(NSString *)lowT currTemp:(NSString *)curT city:(NSString *)location {
+- (id)initWithdayName:(NSString *)dayName weatherDesc:(NSString *)description highTemp:(NSString *)highT lowTemp:(NSString *)lowT currTemp:(NSString *)curT {
     if (self = [super init]) {
         _name = dayName;
         _weather = description;
         _high = highT;
         _low = lowT;
         _current = curT;
-        _cityName = location;
     }
     
     return self;

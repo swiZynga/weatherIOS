@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface WTableViewCell : UITableViewCell
+
 @property(weak, nonatomic) IBOutlet UILabel *dayName;
 @property(weak, nonatomic) IBOutlet UILabel *lowTemp;
 @property(weak, nonatomic) IBOutlet UILabel *highTemp;

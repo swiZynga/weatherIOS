@@ -12,6 +12,6 @@
 @interface WModel : NSObject <NSCopying>
 
 @property(nonatomic, strong) NSMutableArray<WDayModel *> *days;
-@property(nonatomic, strong, readonly) NSString *city;
+@property(nonatomic, strong) NSString *city;
 
 @end

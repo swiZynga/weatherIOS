@@ -17,13 +17,11 @@
 @property(strong, nonatomic) NSString *high;
 @property(strong, nonatomic) NSString *low;
 @property(strong, nonatomic) NSString *current;
-@property(strong, nonatomic) NSString *cityName;
 
 - (id)initWithdayName:(NSString *)dayName
           weatherDesc:(NSString *)weatherDescription
              highTemp:(NSString *)highTemperature
               lowTemp:(NSString *)lowTemperature
-             currTemp:(NSString *)currentTemperature
-                 city:(NSString *)location;
+             currTemp:(NSString *)currentTemperature;
 
 @end

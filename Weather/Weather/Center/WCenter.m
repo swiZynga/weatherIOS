@@ -35,14 +35,14 @@
     return self;
 }
 
-- (void)fetchModelData:(void (^)(WModel *dataModel, NSMutableArray *dateList, NSMutableArray *lowTempList, NSMutableArray *highTempList, NSMutableArray *weatherDescription))callback {
+- (void)fetchModelData:(void (^)(WModel *dataModel))callback {
     WProvider *pInstance = [[WProvider alloc] init];
     pInstance.cityName = self.cityInput;
     [pInstance fetchDataWithCallback:^(NSData *data, NSError *error) {
         WAdapter *aInstance = [[WAdapter alloc] init];
         WModel *finalModel = [aInstance convertDataToModel:data];
-        NSDictionary *cellData = [aInstance dataForCells:finalModel];
-        callback([finalModel copy], [cellData[@"dayName"] copy], [cellData[@"temp_max"] copy], [cellData[@"temp_min"] copy], [cellData[@"description"] copy]);
+        
+        callback([finalModel copy]);
     }];
 }
 
