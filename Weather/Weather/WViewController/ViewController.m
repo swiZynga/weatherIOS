@@ -16,10 +16,10 @@
     CGRect originalsize;
 }
 
-@property (strong, nonatomic) NSMutableArray *daysCell;
-@property (strong, nonatomic) NSMutableArray *highTempCell;
-@property (strong, nonatomic) NSMutableArray *lowTempCell;
-@property (strong, nonatomic) NSMutableArray *weatherCell;
+@property(strong, nonatomic) NSMutableArray *daysCell;
+@property(strong, nonatomic) NSMutableArray *highTempCell;
+@property(strong, nonatomic) NSMutableArray *lowTempCell;
+@property(strong, nonatomic) NSMutableArray *weatherCell;
 
 @end
 
