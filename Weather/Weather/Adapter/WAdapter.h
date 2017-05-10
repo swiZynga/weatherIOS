@@ -12,7 +12,9 @@
 @interface WAdapter : NSObject
 
 - (WModel *)convertDataToModel:(NSData *)data;
-- (NSDictionary *) rawDataToDict: (NSData *)data;
-- (NSMutableArray *) dictToArray: (NSDictionary *)dict;
+- (NSDictionary *)rawDataToDict:(NSData *)data;
+- (NSMutableArray *)dictToArray:(NSDictionary *)dict;
+- (void)updateModelwith:(NSMutableArray *)data of:(WModel *)model;
+- (NSMutableDictionary *)dataForCells:(WModel *)model;
 
 @end

@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *dayName;
 @property (weak, nonatomic) IBOutlet UILabel *lowTemp;
 @property (weak, nonatomic) IBOutlet UILabel *highTemp;
+@property (weak, nonatomic) IBOutlet UIImageView *weatherImage;
 
 @end

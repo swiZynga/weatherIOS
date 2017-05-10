@@ -11,27 +11,19 @@
 
 
 @interface WDayModel : NSObject
-{
-    NSString *name;
-    NSString *weather;
-    NSString *high;
-    NSString *low;
-    NSString *current;
-    NSString *cityName;
-}
 
--(NSString *) getName;
--(NSString *) getWeather;
--(NSString *) getHigh;
--(NSString *) getLow;
--(NSString *) getCurrent;
--(NSString *) getCityName;
+@property(strong, nonatomic) NSString *name;
+@property(strong, nonatomic) NSString *weather;
+@property(strong, nonatomic) NSString *high;
+@property(strong, nonatomic) NSString *low;
+@property(strong, nonatomic) NSString *current;
+@property(strong, nonatomic) NSString *cityName;
 
-- (id) initWithdayName:(NSString *)dayName
-           weatherDesc:(NSString *)description
-              highTemp:(NSString *)highT
-               lowTemp:(NSString *)lowT
-              currTemp:(NSString *)curT
-                  city:(NSString *)location;
+- (id)initWithdayName:(NSString *)dayName
+          weatherDesc:(NSString *)weatherDescription
+             highTemp:(NSString *)highTemperature
+              lowTemp:(NSString *)lowTemperature
+             currTemp:(NSString *)currentTemperature
+                 city:(NSString *)location;
 
 @end

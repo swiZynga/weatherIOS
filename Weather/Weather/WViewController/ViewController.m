@@ -11,159 +11,85 @@
 #import "WCenter.h"
 #import "WTableViewCell.h"
 
-@interface ViewController () {
+@interface ViewController() {
     WCenter *cInstance;
-    bool locationViewOpened;
-    NSString *locationCity;
+    CGRect originalsize;
 }
+
+@property (strong, nonatomic) NSMutableArray *daysCell;
+@property (strong, nonatomic) NSMutableArray *highTempCell;
+@property (strong, nonatomic) NSMutableArray *lowTempCell;
+@property (strong, nonatomic) NSMutableArray *weatherCell;
 
 @end
 
 @implementation ViewController
 
+bool locationViewOpened;
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-//    SPINNER FOR LOADING
-//    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    spinner.center = CGPointMake(160, 350);
-//    spinner.tag = 1;
-//    [self.view addSubview:spinner];
-//    [spinner startAnimating];
-    
-    locationCity = @"";
     locationViewOpened = false;
     [self unhide];
     _locationTextField.returnKeyType = UIReturnKeyDone;
     [_locationTextField setDelegate:self];
-    cInstance = [[WCenter alloc] init];
-    [cInstance modelFromData:^(WModel *dataModel) {
-        [self update:dataModel];
+    cInstance = [WCenter sharedInstance];
+    [cInstance fetchModelData:^(WModel *dataModel, NSMutableArray* dayCellData, NSMutableArray* highTempCellData, NSMutableArray* lowTempCelldata, NSMutableArray* weatherDescriptionCellData) {
+        [self update:dataModel with:dayCellData and:highTempCellData and:lowTempCelldata and:weatherDescriptionCellData];
     }];
     
 }
 
-- (void)update: (WModel *)data {
-    
+- (void)update:(WModel *)data with:(NSMutableArray *)dayCellData and:(NSMutableArray *)highTempCellData and:(NSMutableArray *)lowTempCelldata and:(NSMutableArray *)weatherDescriptionCellData {
     NSArray *dayModel = data.days;
     WDayModel *dayOne = [dayModel objectAtIndex:0];
-    WDayModel *dayTwo = [dayModel objectAtIndex:1];
-    WDayModel *dayThree = [dayModel objectAtIndex:2];
-    WDayModel *dayFour = [dayModel objectAtIndex:3];
-    WDayModel *dayFive = [dayModel objectAtIndex:4];
-    
-    self.curWeather.text = [dayOne getWeather];
-    self.curTemp.text = [dayOne getCurrent];
-    self.todayDay.text = [dayOne getName];
-    self.todayLow.text = [dayOne getLow];
-    self.todayHigh.text = [dayOne getHigh];
-    self.city.text = [dayOne getCityName];
-    
-    self.day2.text = [dayTwo getName];
-    self.day3.text = [dayThree getName];
-    self.day4.text = [dayFour getName];
-    self.day5.text = [dayFive getName];
-    
-    self.high2.text = [dayTwo getHigh];
-    self.high3.text = [dayThree getHigh];
-    self.high4.text = [dayFour getHigh];
-    self.high5.text = [dayFive getHigh];
-
-    self.low2.text = [dayTwo getLow];
-    self.low3.text = [dayThree getLow];
-    self.low4.text = [dayFour getLow];
-    self.low5.text = [dayFive getLow];
-    
-    [self setWeatherImage:[dayOne getWeather] with:[NSNumber numberWithInteger:1]];
-    [self setWeatherImage:[dayOne getWeather] with:[NSNumber numberWithInteger:2]];
-    [self setWeatherImage:[dayOne getWeather] with:[NSNumber numberWithInteger:3]];
-    [self setWeatherImage:[dayOne getWeather] with:[NSNumber numberWithInteger:4]];
-    [self setWeatherImage:[dayOne getWeather] with:[NSNumber numberWithInteger:5]];
-    
+    self.curWeather.text = [dayOne weather];
+    self.curTemp.text = [dayOne current];
+    self.todayDay.text = [dayOne name];
+    self.todayLow.text = [dayOne low];
+    self.todayHigh.text = [dayOne high];
+    self.city.text = [dayOne cityName];
+    _daysCell = dayCellData;
+    _highTempCell = highTempCellData;
+    _lowTempCell = lowTempCelldata;
+    _weatherCell = weatherDescriptionCellData;
+    [self setWeatherImage:[dayOne weather] with:[NSNumber numberWithInteger:1]];
+    [_WTableView reloadData];
 }
 
--(void)setWeatherImage: (NSString *)weather with:(NSNumber *)index
-{
+-(void)setWeatherImage:(NSString *)weather with:(NSNumber *)index {
     if([weather isEqualToString: @"clear sky"]){
         if ([index isEqualToNumber:[NSNumber numberWithInteger: 1]]) {
             [_wImage1 setImage:[UIImage imageNamed:@"sunny"]];
-        } else if ([index isEqualToNumber:[NSNumber numberWithInteger:2]]) {
-            [_wImage2 setImage:[UIImage imageNamed:@"sunny"]];
-        } else if ([index isEqualToNumber:[NSNumber numberWithInteger:3]]) {
-            [_wImage3 setImage:[UIImage imageNamed:@"sunny"]];
-        } else if ([index isEqualToNumber:[NSNumber numberWithInteger:4]]) {
-            [_wImage4 setImage:[UIImage imageNamed:@"sunny"]];
-        } else if ([index isEqualToNumber:[NSNumber numberWithInteger:5]]) {
-            [_wImage5 setImage:[UIImage imageNamed:@"sunny"]];
-        }
     } else {
         if ([index isEqualToNumber:[NSNumber numberWithInteger: 1]]) {
             [_wImage1 setImage:[UIImage imageNamed:@"rain"]];
-        } else if ([index isEqualToNumber:[NSNumber numberWithInteger:2]]) {
-            [_wImage2 setImage:[UIImage imageNamed:@"rain"]];
-        } else if ([index isEqualToNumber:[NSNumber numberWithInteger:3]]) {
-            [_wImage3 setImage:[UIImage imageNamed:@"rain"]];
-        } else if ([index isEqualToNumber:[NSNumber numberWithInteger:4]]) {
-            [_wImage4 setImage:[UIImage imageNamed:@"sunny"]];
-        } else if ([index isEqualToNumber:[NSNumber numberWithInteger:5]]) {
-            [_wImage5 setImage:[UIImage imageNamed:@"rain"]];
+            }
         }
     }
 }
 
-- (void) hide
-{
-    _day2.hidden = true;
-    _day3.hidden = true;
-    _day4.hidden = true;
-    _day5.hidden = true;
-    _high2.hidden = true;
-    _high3.hidden = true;
-    _high4.hidden = true;
-    _high5.hidden = true;
-    _low2.hidden = true;
-    _low3.hidden = true;
-    _low4.hidden = true;
-    _low5.hidden = true;
-    _wImage2.hidden = true;
-    _wImage3.hidden = true;
-    _wImage4.hidden = true;
-    _wImage5.hidden = true;
+- (void)hide {
+    _WTableView.hidden = true;
     _cancelBtn.hidden = false;
     _locationTextField.hidden = false;
 }
 
-- (void) unhide
-{
-    _day2.hidden = false;
-    _day3.hidden = false;
-    _day4.hidden = false;
-    _day5.hidden = false;
-    _high2.hidden = false;
-    _high3.hidden = false;
-    _high4.hidden = false;
-    _high5.hidden = false;
-    _low2.hidden = false;
-    _low3.hidden = false;
-    _low4.hidden = false;
-    _low5.hidden = false;
-    _wImage2.hidden = false;
-    _wImage3.hidden = false;
-    _wImage4.hidden = false;
-    _wImage5.hidden = false;
+- (void)unhide {
+    _WTableView.hidden = false;
     _cancelBtn.hidden = true;
     _locationTextField.hidden = true;
 }
 
-- (IBAction)setLocation:(id)sender
-{
-
+- (void)hideSearchBar {
     if (!locationViewOpened) {
+        originalsize = CGRectMake(_locationView.frame.origin.x, _locationView.frame.origin.y, _locationView.frame.size.width, _locationView.frame.size.height);
         [UIView transitionWithView:_locationView
                           duration:0.4
                            options:UIViewAnimationOptionTransitionNone
                         animations:^{
-                            _locationView.frame = CGRectMake(0, 346, 375, 321);
+                            _locationView.frame = CGRectMake(0, _divider.frame.origin.y, _locationView.frame.size.width, _locationView.frame.origin.y - _divider.frame.origin.y + _locationView.frame.size.height);
                             _locationView.alpha = 0.8;
                             _locationView.backgroundColor = [UIColor blackColor];
                             [self hide];
@@ -175,7 +101,7 @@
                           duration:0.4
                            options:UIViewAnimationOptionTransitionNone
                         animations:^{
-                            _locationView.frame = CGRectMake(0, 613, 375, 54);
+                            _locationView.frame = originalsize;
                             _locationView.alpha = 0.5;
                             _locationView.backgroundColor = [UIColor whiteColor];
                             [self unhide];
@@ -185,38 +111,53 @@
     }
 }
 
-- (IBAction)cancelBtn:(id)sender
-{
-    [_setLocation sendActionsForControlEvents:UIControlEventTouchUpInside];
+- (IBAction)setLocation:(id)sender {
+    [self hideSearchBar];
+}
+
+- (IBAction)cancelBtn:(id)sender {
+    [self hideSearchBar];
     [_locationTextField resignFirstResponder];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     [_setLocation sendActionsForControlEvents:UIControlEventTouchUpInside];
-    locationCity = textField.text;
-    cInstance = [[WCenter alloc] init];
-    [cInstance modelFromData:^(WModel *dataModel) {
-        [self update:dataModel];
+    cInstance.cityInput = textField.text;
+    [cInstance fetchModelData:^(WModel *dataModel, NSMutableArray* dayCellData, NSMutableArray* highTempCellData, NSMutableArray* lowTempCelldata, NSMutableArray* weatherDescriptionCellData) {
+        [self update:dataModel with:dayCellData and:highTempCellData and:lowTempCelldata and:weatherDescriptionCellData];
     }];
     
     return YES;
 }
 
-
-- (void)cityUserInput: (void (^)(NSString *city))callback
-{
-    callback([locationCity copy]);
-}
-
-
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_daysCell count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *simpleTableIdentifier = @"WCell";
+    WTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier];
+    if (cell == nil) {
+        cell = [[WTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
+    cell.dayName.text = [_daysCell objectAtIndex:indexPath.row];
+    cell.lowTemp.text = [_lowTempCell objectAtIndex:indexPath.row];
+    cell.highTemp.text = [_highTempCell objectAtIndex:indexPath.row];
+    if ([[_weatherCell objectAtIndex:indexPath.row] isEqualToString:@"clear sky"]) {
+        [cell.weatherImage setImage:[UIImage imageNamed:@"sunny"]];
+    } else {
+        [cell.weatherImage setImage:[UIImage imageNamed:@"rain"]];
+    }
+    
+    return cell;
+}
+
 
 
 @end

@@ -11,5 +11,6 @@
 @interface WProvider : NSObject
 
 - (void)fetchDataWithCallback:(void (^)(NSData *data, NSError *error))callback;
+@property(strong, nonatomic) NSString *cityName;
 
 @end

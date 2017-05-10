@@ -11,7 +11,10 @@
 
 @interface WCenter : NSObject
 
-- (void)modelFromData: (void (^)(WModel *dataModel))callback;
++ (instancetype)sharedInstance;
+- (void)fetchModelData:(void (^)(WModel *dataModel, NSMutableArray *dateList, NSMutableArray *lowTempList, NSMutableArray *highTempList, NSMutableArray *weatherDescription))callback;
+
+@property(nonatomic, strong) NSString *cityInput;
 
 
 @end
